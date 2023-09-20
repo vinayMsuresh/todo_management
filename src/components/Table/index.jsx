@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Container, Table } from "react-bootstrap";
 
-export default function TodoListTable({ list }) {
+export default function TodoListTable({ list, setedit, deleteTodo }) {
   return (
     <Container className="mt-3">
       <Table striped bordered hover>
@@ -22,12 +22,12 @@ export default function TodoListTable({ list }) {
                   <td>{item.title}</td>
                   <td>{item.description}</td>
                   <td>
-                    <Button variant="info" onClick={() => {}}>
+                    <Button variant="info" onClick={() => setedit(item)}>
                       Edit
                     </Button>
                   </td>
                   <td>
-                    <Button variant="danger" onClick={() => {}}>
+                    <Button variant="danger" onClick={() => deleteTodo(item)}>
                       Delete
                     </Button>
                   </td>
