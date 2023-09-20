@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, Container, Table } from "react-bootstrap";
+import Btn from "../inputs/Btn";
 
 export default function TodoListTable({ list, setedit, deleteTodo }) {
   return (
@@ -10,7 +11,7 @@ export default function TodoListTable({ list, setedit, deleteTodo }) {
             <th>S. No</th>
             <th>Todo Title</th>
             <th>Todo Description</th>
-            <th colSpan={2}>Action</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
@@ -22,14 +23,18 @@ export default function TodoListTable({ list, setedit, deleteTodo }) {
                   <td>{item.title}</td>
                   <td>{item.description}</td>
                   <td>
-                    <Button variant="info" onClick={() => setedit(item)}>
-                      Edit
-                    </Button>
-                  </td>
-                  <td>
-                    <Button variant="danger" onClick={() => deleteTodo(item)}>
-                      Delete
-                    </Button>
+                    <Btn
+                      variant="info"
+                      onClick={() => setedit(item)}
+                      name="Edit"
+                      className="mx-3"
+                    />
+
+                    <Btn
+                      variant="danger"
+                      onClick={() => deleteTodo(item)}
+                      name="Delete"
+                    />
                   </td>
                 </tr>
               );

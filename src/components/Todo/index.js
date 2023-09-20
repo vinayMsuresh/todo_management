@@ -3,6 +3,7 @@ import Header from "../Header";
 import TodoForm from "../Form";
 import TodoListTable from "../Table";
 import { v4 as uuid } from "uuid";
+import { validate } from "../utils/utils";
 
 export default function Todo() {
   const [todoList, setTodoList] = useState([]);
@@ -13,29 +14,6 @@ export default function Todo() {
     title: null,
     description: null,
   });
-
-  const handleTitle = (e) => {
-    const { value } = e.target;
-    if (!value || value.length === 0) {
-      const errMsg = "Please enter a todo title";
-      setErrors({ ...errors, title: errMsg });
-    } else if (value.length > 50 || value.length < 3) {
-      const errMsg = "Please enter a todo title in 3-50 characters length";
-      setErrors({ ...errors, title: errMsg });
-    } else {
-      setErrors({ ...errors, title: null });
-    }
-  };
-  const handleDesc = (e) => {
-    const { value } = e.target;
-    if (value && value.length < 3) {
-      const errMsg =
-        "Please enter a todo description in minimum 3 characters length";
-      setErrors({ ...errors, description: errMsg });
-    } else {
-      setErrors({ ...errors, description: null });
-    }
-  };
 
   const setEditMode = (value) => {
     setEdit(value);
@@ -48,17 +26,20 @@ export default function Todo() {
     setDescription("");
   };
 
-  const submitForm = () => {
-    const error = Object.values(errors).filter((error) => error !== null);
-    if (error.length) {
-      alert("Please ensure all the fields are filled properly");
-      return;
-    }
+  const submitForm = (e) => {
+    e.preventDefault();
     const todoObj = {
       id: uuid(),
       title,
       description,
     };
+    const ers = validate(todoObj);
+    setErrors(ers);
+    const error = Object.values(ers).filter((error) => error !== null);
+    if (error.length) {
+      return;
+    }
+
     setTitle("");
     setDescription("");
     if (edit) {
@@ -79,11 +60,7 @@ export default function Todo() {
     }
   };
   const deleteTodo = (value) => {
-    if (
-      window.confirm(
-        "Are you sure you want to save this thing into the database?"
-      )
-    ) {
+    if (window.confirm("Are you sure you want to delete this todo")) {
       let todos = todoList;
       todos = todoList.filter((todo) => todo.id !== value.id);
       setTodoList(todos);
@@ -97,8 +74,6 @@ export default function Todo() {
       <TodoForm
         title={title}
         description={description}
-        handleTitle={handleTitle}
-        handleDesc={handleDesc}
         setTitle={setTitle}
         setDescription={setDescription}
         errors={errors}
