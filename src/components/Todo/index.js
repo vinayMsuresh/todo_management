@@ -7,6 +7,7 @@ import { validate } from "../utils/utils";
 import { Modal } from "react-bootstrap";
 import Btn from "../inputs/Btn";
 import { ConfirmToast } from "react-confirm-toast";
+import { toast } from "react-toastify";
 
 export default function Todo() {
   const initialErrors = {
@@ -61,10 +62,10 @@ export default function Todo() {
       });
       setTodoList(todos);
       setEdit(false);
-      alert("Todo updated successfully");
+      toast.success("Todo updated successfully");
     } else {
       setTodoList([...todoList, todoObj]);
-      alert("Todo created successfully");
+      toast.success("Todo created successfully");
     }
     setOperation(false);
   };
