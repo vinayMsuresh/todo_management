@@ -6,6 +6,7 @@ import { v4 as uuid } from "uuid";
 import { validate } from "../utils/utils";
 import { Modal } from "react-bootstrap";
 import Btn from "../inputs/Btn";
+import { ConfirmToast } from "react-confirm-toast";
 
 export default function Todo() {
   const initialErrors = {
@@ -68,13 +69,9 @@ export default function Todo() {
     setOperation(false);
   };
   const deleteTodo = (value) => {
-    if (window.confirm("Are you sure you want to delete this todo")) {
-      let todos = todoList;
-      todos = todoList.filter((todo) => todo.id !== value.id);
-      setTodoList(todos);
-    } else {
-      // Do nothing!
-    }
+    let todos = todoList;
+    todos = todoList.filter((todo) => todo.id !== value.id);
+    setTodoList(todos);
   };
   const onClose = () => {
     setEdit(false);

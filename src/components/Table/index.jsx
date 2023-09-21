@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Container, Table } from "react-bootstrap";
 import Btn from "../inputs/Btn";
+import { ConfirmToast } from "react-confirm-toast";
 
 export default function TodoListTable({ list, setedit, deleteTodo }) {
   return (
@@ -30,11 +31,20 @@ export default function TodoListTable({ list, setedit, deleteTodo }) {
                       className="mx-3"
                     />
 
-                    <Btn
-                      variant="danger"
-                      onClick={() => deleteTodo(item)}
-                      name="Delete"
-                    />
+                    <Button variant="danger">
+                      <ConfirmToast
+                        childrenClassName="margin-top-10"
+                        customCancel="Reject"
+                        customConfirm="Confirm"
+                        customFunction={() => deleteTodo(item)}
+                        message="Are you confirm to delete the todo?"
+                        position="top-right"
+                        showCloseIcon={true}
+                        theme="lilac"
+                      >
+                        Delete
+                      </ConfirmToast>
+                    </Button>
                   </td>
                 </tr>
               );
