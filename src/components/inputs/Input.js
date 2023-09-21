@@ -1,11 +1,11 @@
 import React from "react";
-import { Col, Form } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 
 export default function Input({ value, error, onChange, placeholder }) {
   return (
-    <>
-      <Form.Label column sm="2"></Form.Label>
-      <Col sm="6">
+    <Form.Group as={Row} className="mb-3 ">
+      <Form.Label column sm="1"></Form.Label>
+      <Col sm="10">
         <Form.Control
           type="text"
           value={value}
@@ -14,6 +14,6 @@ export default function Input({ value, error, onChange, placeholder }) {
         />
         <span className="text-danger">{error}</span>
       </Col>
-    </>
+    </Form.Group>
   );
 }

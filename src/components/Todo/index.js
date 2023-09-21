@@ -4,26 +4,33 @@ import TodoForm from "../Form";
 import TodoListTable from "../Table";
 import { v4 as uuid } from "uuid";
 import { validate } from "../utils/utils";
+import { Modal } from "react-bootstrap";
+import Btn from "../inputs/Btn";
 
 export default function Todo() {
+  const initialErrors = {
+    title: null,
+    description: null,
+  };
   const [todoList, setTodoList] = useState([]);
   const [title, setTitle] = useState(null);
   const [description, setDescription] = useState(null);
   const [edit, setEdit] = useState(false);
-  const [errors, setErrors] = useState({
-    title: null,
-    description: null,
-  });
+  const [operation, setOperation] = useState(false);
+  const [errors, setErrors] = useState(initialErrors);
 
   const setEditMode = (value) => {
     setEdit(value);
     setTitle(value?.title);
     setDescription(value?.description);
+    setOperation(true);
   };
   const cancelForm = () => {
     setEdit(false);
     setTitle("");
     setDescription("");
+    setErrors(initialErrors);
+    setOperation(false);
   };
 
   const submitForm = (e) => {
@@ -58,6 +65,7 @@ export default function Todo() {
       setTodoList([...todoList, todoObj]);
       alert("Todo created successfully");
     }
+    setOperation(false);
   };
   const deleteTodo = (value) => {
     if (window.confirm("Are you sure you want to delete this todo")) {
@@ -68,19 +76,48 @@ export default function Todo() {
       // Do nothing!
     }
   };
+  const onClose = () => {
+    setEdit(false);
+    setTitle(null);
+    setDescription(null);
+    setErrors(initialErrors);
+    setOperation(false);
+  };
   return (
     <div>
-      <Header />
-      <TodoForm
-        title={title}
-        description={description}
-        setTitle={setTitle}
-        setDescription={setDescription}
-        errors={errors}
-        submitForm={submitForm}
-        edit={edit}
-        cancelForm={cancelForm}
-      />
+      <Header setOperation={setOperation} />
+      <Modal show={operation} onHide={onClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>{edit ? "Edit Todo" : "Add Todo"}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <TodoForm
+            title={title}
+            description={description}
+            setTitle={setTitle}
+            setDescription={setDescription}
+            errors={errors}
+            edit={edit}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          {edit && (
+            <Btn
+              variant="danger"
+              onClick={cancelForm}
+              className="mx-3"
+              name="Cancel"
+            />
+          )}
+          <Btn
+            type="submit"
+            variant="success"
+            name="Save"
+            onClick={submitForm}
+          ></Btn>
+        </Modal.Footer>
+      </Modal>
+
       <TodoListTable
         list={todoList}
         setedit={setEditMode}
