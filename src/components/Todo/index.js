@@ -21,6 +21,25 @@ export default function Todo() {
   const [operation, setOperation] = useState(false);
   const [errors, setErrors] = useState(initialErrors);
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const todoObj = {
+      title,
+      description,
+    };
+    if (name === "title") {
+      setTitle(value);
+      todoObj.title = value;
+    } else {
+      setDescription(value);
+      todoObj.description = value;
+    }
+
+    const ers = validate(todoObj);
+    setErrors(ers);
+    console.log(ers);
+  };
+
   const setEditMode = (value) => {
     setEdit(value);
     setTitle(value?.title);
@@ -92,10 +111,9 @@ export default function Todo() {
           <TodoForm
             title={title}
             description={description}
-            setTitle={setTitle}
-            setDescription={setDescription}
             errors={errors}
             edit={edit}
+            handleChange={handleChange}
           />
         </Modal.Body>
         <Modal.Footer>

@@ -10,8 +10,8 @@ export default function TodoListTable({ list, setedit, deleteTodo }) {
         <thead>
           <tr>
             <th>S. No</th>
-            <th>Todo Title</th>
-            <th>Todo Description</th>
+            <th>Title</th>
+            <th>Description</th>
             <th>Action</th>
           </tr>
         </thead>
@@ -34,10 +34,10 @@ export default function TodoListTable({ list, setedit, deleteTodo }) {
                     <Button variant="danger">
                       <ConfirmToast
                         childrenClassName="margin-top-10"
-                        customCancel="Reject"
+                        customCancel="Cancel"
                         customConfirm="Confirm"
                         customFunction={() => deleteTodo(item)}
-                        message="Are you confirm to delete the todo?"
+                        message="Are you sure want to delete this todo?"
                         position="top-right"
                         showCloseIcon={true}
                         theme="lilac"

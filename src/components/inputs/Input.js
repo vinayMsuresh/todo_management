@@ -1,7 +1,13 @@
 import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
 
-export default function Input({ value, error, onChange, placeholder }) {
+export default function Input({
+  value,
+  error,
+  handleChange,
+  placeholder,
+  ...props
+}) {
   return (
     <Form.Group as={Row} className="mb-3 ">
       <Form.Label column sm="1"></Form.Label>
@@ -10,7 +16,8 @@ export default function Input({ value, error, onChange, placeholder }) {
           type="text"
           value={value}
           placeholder={placeholder}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={handleChange}
+          {...props}
         />
         <span className="text-danger">{error}</span>
       </Col>
